@@ -29,6 +29,24 @@ buildscript {
     }
 }
 
+android {
+    // TODO: Step 2.1, Target Android 10.
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.example.android.whileinuselocation"
+        minSdkVersion 26
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+    }
+}
+        <service
+android:name="com.example.android.whileinuselocation.ForegroundOnlyLocationService"
+android:enabled="true"
+android:exported="false"
+android:foregroundServiceType="location">
+
 allprojects {
     repositories {
         google()
