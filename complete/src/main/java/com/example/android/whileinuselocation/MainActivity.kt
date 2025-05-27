@@ -39,6 +39,45 @@ import com.google.android.material.snackbar.Snackbar
 
 private const val TAG = "MainActivity"
 private const val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 34
+private val runningQOrLater =
+    android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
+
+val backgroundPermissionApproved =
+    if (runningQOrLater) {
+        ActivityCompat.checkSelfPermission(
+            this, Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    } else {
+        true
+    }
+if (runningQOrLater) {
+    permissionRequests.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+}
+
+val permissionRequests = arrayListOf(Manifest.permission.ACCESS_FINE_LOCATION)
+// TODO: Step 3.4, Add another entry to permission request array.
+if (runningQOrLater) {
+    permissionRequests.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+}
+
+if(runningQOrLater) {
+    foregroundAndBackgroundLocationApproved =
+        foregroundAndBackgroundLocationApproved &&
+                (grantResults[1] == PackageManager.PERMISSION_GRANTED)
+}
+var foregroundAndBackgroundLocationApproved =
+    grantResults[0] == PackageManager.PERMISSION_GRANTED
+
+// TODO: Step 3.5, For Android 10, check if background permissions approved in request code.
+if(runningQOrLater) {
+    foregroundAndBackgroundLocationApproved =
+        foregroundAndBackgroundLocationApproved &&
+                (grantResults[1] == PackageManager.PERMISSION_GRANTED)
+}
+
+// TODO: Step 3.6, review method call for foreground and background location.
+foregroundAndBackgroundLocationApproved ->
+startForegroundAndBackgroundLocation()
 
 /**
  *  This app allows a user to receive location updates without the background permission even when
